@@ -2,8 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Search = () => {
-  const [term, setTerm] = useState("React");
+  const [term, setTerm] = useState("React"); // The Wikipedia's API needs to have a default search term
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
 
   useEffect(() => {
     const searchWiki = async () => {
@@ -13,27 +24,38 @@ const Search = () => {
           list: "search",
           origin: "*",
           format: "json",
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
 
       setResults(data.query.search);
     };
 
-    if (term && !results.length) {
-      searchWiki();
-    } else {
-      const timeoutId = setTimeout(() => {
-        if (term) {
-          searchWiki();
-        }
-      }, 1000);
+    searchWiki();
+  }, [debouncedTerm]);
 
-      return () => {
-        clearTimeout(timeoutId);
-      };
-    }
-  }, [term]);
+  // useEffect(() => {
+
+  //   // Do FIRST TIME search: If there's a 'term' presents
+  //   // && there's no results yet, search!
+  //   if (term && !results.length) {
+  //     searchWiki();
+  //   } else {
+  //     // Set and Cancel the setTimeout() to achive the desired search behavior
+  //     // First, delay the search for 1 sec
+  //     const timeoutId = setTimeout(() => {
+  //       if (term) {
+  //         searchWiki();
+  //       }
+  //     }, 1000);
+
+  //     // Then, next execution time, whenever 'term' changes,
+  //     // cancel the previous delay
+  //     return () => {
+  //       clearTimeout(timeoutId);
+  //     };
+  //   }
+  // }, [term]); // Call these code 1st time render & everytime "term" has changed
 
   const renderedResults = results.map((result) => {
     return (
