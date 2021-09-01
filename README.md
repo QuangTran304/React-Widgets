@@ -11,10 +11,18 @@ The goal of this project is to familiarized myself even more with builing reusab
 
 ## Library used:
 
-Semantic UI: [semantic-ui.com](<[https://link](https://semantic-ui.com/)>)
+Semantic UI: [semantic-ui.com](https://semantic-ui.com)
 
 ## React hooks used:
 
 - useState( )
 - useEffect( )
 - useRef( )
+
+## Issue went through:
+
+- useEffect tricky warning
+- child -> parent prop passing
+- event bubbling (React events & regular DOM events)
+- the 'capture' phrase in React 17
+- toggle a panel outside of its component
