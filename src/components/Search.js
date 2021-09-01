@@ -34,29 +34,6 @@ const Search = () => {
     searchWiki();
   }, [debouncedTerm]);
 
-  // useEffect(() => {
-
-  //   // Do FIRST TIME search: If there's a 'term' presents
-  //   // && there's no results yet, search!
-  //   if (term && !results.length) {
-  //     searchWiki();
-  //   } else {
-  //     // Set and Cancel the setTimeout() to achive the desired search behavior
-  //     // First, delay the search for 1 sec
-  //     const timeoutId = setTimeout(() => {
-  //       if (term) {
-  //         searchWiki();
-  //       }
-  //     }, 1000);
-
-  //     // Then, next execution time, whenever 'term' changes,
-  //     // cancel the previous delay
-  //     return () => {
-  //       clearTimeout(timeoutId);
-  //     };
-  //   }
-  // }, [term]); // Call these code 1st time render & everytime "term" has changed
-
   const renderedResults = results.map((result) => {
     return (
       <div key={result.pageid} className="item">
